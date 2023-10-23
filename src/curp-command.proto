@@ -133,6 +133,20 @@ message ProposeConfChangeResponse {
     uint64 term = 9;
 }
 
+message ClientLeaseKeepAliveRequest {
+    // The optional client_id, 0 means a grant request
+    uint64 client_id = 1;
+}
+
+message ClientLeaseKeepAliveResponse {
+    optional uint64 leader_id = 1;
+    uint64 term = 2;
+    // The refreshed(generated) client_id
+    uint64 client_id = 3;
+    // Whether the cluster is shutting down
+    bool cluster_shutdown = 4;
+}
+
 service Protocol {
     rpc Propose (ProposeRequest) returns (ProposeResponse);
     rpc WaitSynced (WaitSyncedRequest)
@@ -141,5 +155,7 @@ service Protocol {
     rpc Shutdown (ShutdownRequest) returns (ShutdownResponse);
     rpc FetchCluster (FetchClusterRequest) returns (FetchClusterResponse);
     rpc FetchReadState (FetchReadStateRequest) returns (FetchReadStateResponse);
+    rpc ClientLeaseKeepAlive (stream ClientLeaseKeepAliveRequest)
+            returns (ClientLeaseKeepAliveResponse);
 }
 
