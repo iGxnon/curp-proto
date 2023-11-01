@@ -24,6 +24,7 @@ message ProposeRequest {
     // The original type is `Command`
     bytes command = 1;
     uint64 cluster_version = 2;
+    uint64 first_incomplete = 3;
 }
 
 message CmdResult {
@@ -40,6 +41,7 @@ message CmdResult {
 enum ProposeError {
     KeyConflict = 0;
     Duplicated = 1;
+    ExpiredClientId = 2;
 }
 
 message ProposeResponse {
@@ -117,6 +119,7 @@ message ProposeConfChangeRequest {
     ProposeId propose_id = 1;
     repeated ConfChange changes = 2;
     uint64 cluster_version = 3;
+    uint64 first_incomplete = 4;
 }
 
 message ProposeConfChangeResponse {
