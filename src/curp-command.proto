@@ -101,6 +101,7 @@ message ShutdownRequest {
 }
 
 message ShutdownResponse {
+    optional ProposeError error = 2;
 }
 
 message ProposeConfChangeRequest {
@@ -119,7 +120,6 @@ message ProposeConfChangeRequest {
     ProposeId propose_id = 1;
     repeated ConfChange changes = 2;
     uint64 cluster_version = 3;
-    uint64 first_incomplete = 4;
 }
 
 message ProposeConfChangeResponse {
